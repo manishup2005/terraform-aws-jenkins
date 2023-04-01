@@ -3,7 +3,7 @@ terraform {
 }
 
 provider "aws" {
-  region  = "us-east-2"
+  region  = "us-east-1"
   profile = "default"
 }
 
@@ -70,7 +70,7 @@ resource "aws_instance" "jenkins" {
   ami             = data.aws_ami.amazon-linux-2.id
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.jenkins-sg.name]
-  key_name        = "manish-devops"
+  key_name        = "aws-manishdev-ops"
   provisioner "remote-exec" {
     inline = [
       "sudo amazon-linux-extras install epel -y",
@@ -88,7 +88,7 @@ resource "aws_instance" "jenkins" {
     type        = "ssh"
     host        = self.public_ip
     user        = "ec2-user"
-    private_key = file("/Users/manishupadhyay/projects/sandbox/aws-manishdev-ops.pem")
+    private_key = file("/Users/manishupadhyay/projects/sandbox/terraform-aws-jenkins/aws-manishdev-ops.pem")
   }
   tags = {
     "Name" = "Jenkins"
